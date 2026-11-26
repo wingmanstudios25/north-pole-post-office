@@ -114,7 +114,7 @@ export default function Home() {
                 <Link className={"btn" + (k === "read" ? "" : " ghost")} href={"/order?tier=" + k + (clean ? "&name=" + encodeURIComponent(clean) : "")}>Choose this letter</Link>
               </div>))}
           </div>
-          <p className="centre lead" style={{ margin: "26px auto 6px" }}>Every order comes with a download pack: the letter to print, an envelope to cut out and seal, and a Nice List certificate with their name on it. Plus a 21-page Christmas Day Fun Pack of quizzes, bingo, charades and things to make.</p>
+          <p className="centre lead" style={{ margin: "26px auto 6px" }}>Every order comes with a download pack: the letter to print, an envelope to cut out and seal, and a Nice List certificate with their name on it.</p>
           <p className="centre fine">Each extra child on the same order is {gbp(EXTRA_CHILD)}. Delivered on screen and by email, straight after payment.</p>
         </section>
 
