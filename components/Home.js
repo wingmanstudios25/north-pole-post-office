@@ -1,5 +1,5 @@
 "use client";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import Envelope from "@/components/Envelope";
 import Snow from "@/components/Snow";
@@ -25,6 +25,11 @@ const QUESTIONS = [
 export default function Home() {
   const [name, setName] = useState("");
   const [pin, setPin] = useState(2);
+  const [opened, setOpened] = useState(0);   // 0 sealed · 1 turned over · 2 seal broken · 3 letter out
+  const timers = useRef([]);
+  const openEnvelope = () => { if (opened) return; const quick = matchMedia("(prefers-reduced-motion: reduce)").matches; setOpened(1); timers.current = [setTimeout(() => setOpened(2), quick ? 10 : 800), setTimeout(() => setOpened(3), quick ? 20 : 1350)]; };
+  const closeEnvelope = () => { timers.current.forEach(clearTimeout); setOpened(0); };
+  useEffect(() => { if (opened !== 3) return; const k = (e) => e.key === "Escape" && closeEnvelope(); addEventListener("keydown", k); return () => removeEventListener("keydown", k); }, [opened]);
   const stack = useRef(null);
   const tilt = (e) => { const el = stack.current; if (!el) return; const r = el.getBoundingClientRect(); const x = (e.clientX - r.left) / r.width - 0.5, y = (e.clientY - r.top) / r.height - 0.5; el.style.setProperty("--rx", (-y * 5).toFixed(2) + "deg"); el.style.setProperty("--ry", (x * 7).toFixed(2) + "deg"); };
   const rest = () => { stack.current?.style.setProperty("--rx", "0deg"); stack.current?.style.setProperty("--ry", "0deg"); };
@@ -52,11 +57,25 @@ export default function Home() {
             </div>
             <div className="stack" ref={stack} onPointerMove={tilt} onPointerLeave={rest}>
               <img className="sheet-peek" src="/art/sample.jpg" alt="" />
-              <Envelope name={clean} town={clean ? "By hand, with care" : ""} className={clean ? "addressed" : ""} />
+              <button type="button" className={"env-btn" + (opened ? " flipped" : "") + (opened >= 2 ? " broken" : "")} onClick={openEnvelope} aria-label="Open the envelope to see an example letter">
+                <span className="flip3d">
+                  <Envelope name={clean} town={clean ? "By hand, with care" : ""} className={clean ? "addressed" : ""} />
+                  <span className="env-back"><i /><img src="/art/seal.png" alt="" /></span>
+                </span>
+              </button>
+              <p className="tap">Tap the envelope to open it</p>
             </div>
           </div>
         </div>
       </header>
+
+      {opened === 3 && (
+        <div className="lightbox" role="dialog" aria-modal="true" aria-label="An example letter" onClick={closeEnvelope}>
+          <div className="lightbox-in" onClick={(e) => e.stopPropagation()}>
+            <img src="/art/sample.jpg" alt="An example letter from Father Christmas, written for a girl called Matilda." />
+            <div className="lightbox-bar"><span>An example, written for Matilda. Yours is written about your child.</span><span><button className="btn ghost small" onClick={closeEnvelope}>Close</button> <Link className="btn small" href={orderHref}>{clean ? `Write ${clean}’s letter` : "Write their letter"}</Link></span></div>
+          </div>
+        </div>)}
 
       <main>
         <section className="arrives wrap">
