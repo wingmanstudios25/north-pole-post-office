@@ -3,15 +3,16 @@ import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import Envelope from "@/components/Envelope";
 import Snow from "@/components/Snow";
+import Nav from "@/components/Nav";
 import { SHOP, TIERS, EXTRA_CHILD, BUSINESS, CONTACT } from "@/lib/order";
 
 const gbp = (p) => "£" + (p / 100).toFixed(2);
 const DETAILS = [
-  { x: 17, y: 8.5, title: "Their own entry in the Nice List Register", text: "Every child gets a folio number, written in by hand and checked twice." },
-  { x: 86, y: 8, title: "A North Pole stamp and postmark", text: "Franked at the Arctic Circle sorting office and passed for reindeer air mail." },
-  { x: 50, y: 41, title: "Written about them, not at them", text: "Their name, their town, what they worked hardest at this year and what they are hoping for." },
-  { x: 33, y: 78, title: "Signed in his own hand and sealed in wax", text: "With a handwritten P.S. you can choose yourself." },
-  { x: 24, y: 91, title: "A note from the post-room elf", text: "Pip Tinseltoe sorted it, and has something to confess." },
+  { art: <img src="/art/crest.png" alt="" />, title: "Their own entry in the Nice List Register", text: "Every child gets a folio number, written in by hand and checked twice." },
+  { art: <img src="/art/stamp.png" alt="" style={{ width: "58%" }} />, title: "A North Pole stamp and postmark", text: "Franked at the Arctic Circle sorting office and passed for reindeer air mail." },
+  { art: <span className="hand">My dear…</span>, title: "Written about them, not at them", text: "Their name, their town, what they worked hardest at this year and what they are hoping for." },
+  { art: <img src="/art/seal.png" alt="" />, title: "Signed in his own hand and sealed in wax", text: "With a handwritten P.S. that you can choose yourself." },
+  { art: <span className="hand elf">Pip</span>, title: "A note from the post-room elf", text: "Pip Tinseltoe sorted it, and has something to confess." },
 ];
 const QUESTIONS = [
   ["How does the letter reach me?", "It opens on screen as soon as you have paid, and we email you a private link to it. Nothing is sent by post, so there is no last posting date."],
@@ -24,7 +25,6 @@ const QUESTIONS = [
 
 export default function Home() {
   const [name, setName] = useState("");
-  const [pin, setPin] = useState(2);
   const [opened, setOpened] = useState(0);   // 0 sealed · 1 turned over · 2 seal broken · 3 letter out
   const timers = useRef([]);
   const openEnvelope = () => { if (opened) return; const quick = matchMedia("(prefers-reduced-motion: reduce)").matches; setOpened(1); timers.current = [setTimeout(() => setOpened(2), quick ? 10 : 800), setTimeout(() => setOpened(3), quick ? 20 : 1350)]; };
@@ -38,10 +38,10 @@ export default function Home() {
 
   return (
     <>
+      <Nav />
       <header className="counter">
         <Snow />
         <div className="wrap">
-          <div className="top"><Link className="brand" href="/">{SHOP}</Link><Link className="btn ghost small" href="/order">Order a letter</Link></div>
           <div className="counter-grid">
             <div>
               <h1>A real letter from Father Christmas, written to your child.</h1>
@@ -53,11 +53,12 @@ export default function Home() {
                   <button className="btn">{clean ? `Write ${clean}’s letter` : "Write their letter"}</button>
                 </div>
                 <p className="hint">Watch the envelope as you type.</p>
+                <ul className="promises"><li>Delivered the moment you pay</li><li>Secure payment by Stripe</li><li>Any mistake corrected free</li></ul>
               </form>
             </div>
             <div className="stack" ref={stack} onPointerMove={tilt} onPointerLeave={rest}>
-              <img className="sheet-peek" src="/art/sample.jpg" alt="" />
-              <button type="button" className={"env-btn" + (opened ? " flipped" : "") + (opened >= 2 ? " broken" : "")} onClick={openEnvelope} aria-label="Open the envelope to see an example letter">
+              <img className="sheet-peek" src="/art/letter-tease.jpg" alt="" />
+              <button type="button" className={"env-btn" + (opened ? " flipped" : "") + (opened >= 2 ? " broken" : "")} onClick={openEnvelope} aria-label="Open the envelope for a glimpse of the letter">
                 <span className="flip3d">
                   <Envelope name={clean} town={clean ? "By hand, with care" : ""} className={clean ? "addressed" : ""} />
                   <span className="env-back"><i /><img src="/art/seal.png" alt="" /></span>
@@ -72,27 +73,28 @@ export default function Home() {
       {opened === 3 && (
         <div className="lightbox" role="dialog" aria-modal="true" aria-label="An example letter" onClick={closeEnvelope}>
           <div className="lightbox-in" onClick={(e) => e.stopPropagation()}>
-            <img src="/art/sample.jpg" alt="An example letter from Father Christmas, written for a girl called Matilda." />
-            <div className="lightbox-bar"><span>An example, written for Matilda. Yours is written about your child.</span><span><button className="btn ghost small" onClick={closeEnvelope}>Close</button> <Link className="btn small" href={orderHref}>{clean ? `Write ${clean}’s letter` : "Write their letter"}</Link></span></div>
+            <img src="/art/letter-tease.jpg" alt="A letter from the Office of Father Christmas with a crest, stamp, signature and red wax seal. The words are blurred." />
+            <div className="lightbox-bar"><span>A glimpse. The words are kept for your child: theirs is written about them alone.</span><span><button className="btn ghost small" onClick={closeEnvelope}>Close</button> <Link className="btn small" href={orderHref}>{clean ? `Write ${clean}’s letter` : "Write their letter"}</Link></span></div>
           </div>
         </div>)}
 
       <main>
-        <section className="arrives wrap">
-          <div className="letter-pins">
-            <img src="/art/sample.jpg" alt="An example letter from Father Christmas on aged cream paper, with a crest, a North Pole stamp and postmark, a signature and a red wax seal." />
-            {DETAILS.map((d, i) => <button key={i} className={"pin" + (pin === i ? " on" : "")} style={{ left: d.x + "%", top: d.y + "%" }} onMouseEnter={() => setPin(i)} onFocus={() => setPin(i)} onClick={() => setPin(i)} aria-label={d.title}><span /></button>)}
-          </div>
-          <div>
-            <h2>What arrives</h2>
-            <p className="lead">One sheet of his own stationery, written to your child. This example was written for Matilda, who is six.</p>
-            <ul className="detail-list">
-              {DETAILS.map((d, i) => <li key={i} className={pin === i ? "on" : ""} onMouseEnter={() => setPin(i)}><button onClick={() => setPin(i)}><b>{d.title}</b><span>{d.text}</span></button></li>)}
-            </ul>
-          </div>
+        <section className="wrap how" aria-label="How it works">
+          <div><span className="num">1</span><h3>Tell us about them</h3><p>Their name, their town, what they achieved this year and what they are wishing for. About three minutes.</p></div>
+          <div><span className="num">2</span><h3>The letter is written</h3><p>On Father Christmas’s own stationery, the moment you pay. Nothing to wait for and no last posting date.</p></div>
+          <div><span className="num">3</span><h3>Open it together</h3><p>Print it for the doormat, then watch him open the envelope and read it to them.</p></div>
         </section>
 
-        <section className="reads">
+        <section className="arrives wrap" id="arrives">
+          <h2>What arrives</h2>
+          <p className="lead">One sheet of his own stationery, written to your child and no one else. We keep the words for them, but here is what makes it his.</p>
+          <ul className="medals">
+            {DETAILS.map((d, i) => <li key={i}><div className="medal">{d.art}</div><div><b>{d.title}</b><span>{d.text}</span></div></li>)}
+          </ul>
+          <p className="fine">Printed at home on A4, or opened on screen. Tap the envelope at the top of the page for a glimpse.</p>
+        </section>
+
+        <section className="reads" id="reading">
           <div className="wrap reads-grid">
             <div>
               <h2>Then he reads it to them himself</h2>
@@ -104,7 +106,7 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="wrap">
+        <section className="wrap" id="prices">
           <h2 className="centre">Choose their letter</h2>
           <div className="tickets">
             {Object.entries(TIERS).map(([k, t]) => (
@@ -118,7 +120,7 @@ export default function Home() {
           <p className="centre fine">Each extra child on the same order is {gbp(EXTRA_CHILD)}. Delivered on screen and by email, straight after payment.</p>
         </section>
 
-        <section className="wrap questions">
+        <section className="wrap questions" id="questions">
           <h2>Questions parents ask</h2>
           {QUESTIONS.map(([q, a]) => <details key={q}><summary>{q}</summary><p>{a}</p></details>)}
         </section>

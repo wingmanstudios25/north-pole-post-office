@@ -1,10 +1,10 @@
 import Link from "next/link";
+import Nav from "@/components/Nav";
 import { SHOP, BUSINESS, CONTACT, TIERS, EXTRA_CHILD } from "@/lib/order";
 export const metadata = { title: "Terms and refunds — " + SHOP };
 const gbp = (p) => "£" + (p / 100).toFixed(2);
 export default function Terms() {
-  return (<div className="wrap" style={{ maxWidth: 720, paddingBottom: 80 }}>
-    <div className="top"><Link className="brand" href="/">{SHOP}</Link></div>
+  return (<><Nav /><div className="wrap" style={{ maxWidth: 720, paddingBottom: 80, paddingTop: 36 }}>
     <h1 style={{ fontStyle: "italic", fontSize: "2.6rem" }}>Terms and refunds</h1>
     <p><b>What you are buying.</b> A personalised digital letter from Father Christmas. Depending on the option you choose, you receive a print-ready PDF and image, and a private web page where the letter is opened and read aloud. Nothing is posted to you.</p>
     <p><b>Prices.</b> {Object.values(TIERS).map((t) => `${t.name} ${gbp(t.price)}`).join("; ")}. Each extra child on the same order is {gbp(EXTRA_CHILD)}. Prices are in pounds sterling and are charged once, at checkout.</p>
@@ -15,5 +15,5 @@ export default function Terms() {
     <p><b>Personal use.</b> The letter is for your own family’s private use and may not be resold.</p>
     <p><b>Who we are.</b> {SHOP} is operated by {BUSINESS}. Contact: <a href={"mailto:" + CONTACT}>{CONTACT}</a>. These terms are governed by the law of England and Wales.</p>
     <p><Link href="/privacy">Privacy and your child’s details</Link></p>
-  </div>);
+  </div></>);
 }

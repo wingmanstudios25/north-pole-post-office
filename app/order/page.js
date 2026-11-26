@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import Envelope from "@/components/Envelope";
+import Nav from "@/components/Nav";
 import { SHOP, TIERS, FIELDS, LETTERS, EXTRA_CHILD, MAX_CHILDREN, priceFor, cleanChild, childErrors } from "@/lib/order";
 
 const gbp = (p) => "£" + (p / 100).toFixed(2);
@@ -36,8 +37,8 @@ export default function Order() {
   }
 
   return (
+    <><Nav cta={false} />
     <div className="wrap">
-      <div className="top"><Link className="brand" href="/">{SHOP}</Link></div>
       <div className="order2">
         <form onSubmit={(e) => { e.preventDefault(); pay(); }}>
           <h1>Write their letter</h1>
@@ -83,10 +84,10 @@ export default function Order() {
         <aside className="side">
           <Envelope name={child.name} town={child.town} className={child.name ? "addressed" : ""} />
           <p className="eg">Their envelope, as it will arrive.</p>
-          <img src="/art/sample.jpg" alt="An example letter from Father Christmas, written for a girl called Matilda." />
-          <p className="eg">An example letter. Yours is written from the details you give, and is made the moment you pay.</p>
+          <img src="/art/letter-tease.jpg" alt="A letter from the Office of Father Christmas with a crest, stamp, signature and red wax seal. The words are blurred." />
+          <p className="eg">A glimpse of the letter. Theirs is written from the details you give, the moment you pay.</p>
         </aside>
       </div>
-    </div>
+    </div></>
   );
 }

@@ -202,3 +202,31 @@ footer .wrap{line-height:1.9}
 .admin-acts{display:flex;gap:8px;flex-wrap:wrap;align-items:center;justify-content:flex-end;max-width:360px}
 .tag-test{margin-left:8px;font-size:.75rem;background:#5a4a1a;color:#f3dfb4;padding:.1em .6em;border-radius:3px}
 @media(max-width:900px){.admin-row{grid-template-columns:1fr;gap:8px}.admin-acts{justify-content:flex-start;max-width:none}}
+/* ===== top bar ===== */
+html{scroll-behavior:smooth;scroll-padding-top:96px}
+.nav{position:sticky;top:0;z-index:40;background:#7a1a1a;box-shadow:0 6px 18px rgba(0,0,0,.35)}
+.nav-in{display:flex;align-items:center;gap:22px;min-height:68px}
+.nav-brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:#fff;font-family:"IM Fell English SC",serif;letter-spacing:.14em;font-size:1rem;line-height:1.15}
+.nav-brand img{width:46px;background:#f4ead4;border-radius:50%;padding:3px;box-shadow:0 0 0 2px #c9a24e}
+.nav-links{display:flex;gap:22px;margin-left:10px}
+.nav-links a{color:#f6e7c6;text-decoration:none;font-size:1.05rem;padding:6px 0;border-bottom:2px solid transparent}
+.nav-links a:hover,.nav-links a:focus-visible{border-color:#c9a24e}
+.nav-right{margin-left:auto;display:flex;align-items:center;gap:18px}
+.sleeps{font-style:italic;color:#f6e7c6;font-size:1rem;white-space:nowrap}
+.nav-cta{background:#f4ead4;color:#7a1a1a;border-color:#c9a24e;font-size:1.1rem;padding:.55em 1.25em;box-shadow:0 2px 0 #c9a24e}
+.nav-cta:hover{background:#fff}
+.nav-snow{height:12px;margin-bottom:-12px;position:relative;background:radial-gradient(circle at 12px -3px,#f3f7f5 11px,transparent 12px) 0 0/24px 12px repeat-x;filter:drop-shadow(0 2px 2px rgba(0,0,0,.25))}
+.counter-grid{padding-top:54px}
+.promises{list-style:none;padding:0;margin:14px 0 0;display:flex;gap:8px 22px;flex-wrap:wrap;font-size:.98rem;color:#d9cfb6}
+.promises li:before{content:"";display:inline-block;width:.5em;height:.5em;border-radius:50%;background:#c9a24e;margin-right:.55em;vertical-align:.1em}
+.how{display:grid;grid-template-columns:repeat(3,1fr);gap:34px;padding-bottom:20px!important}
+.how h3{font-size:1.45rem;font-style:italic;margin:.5em 0 .2em}.how p{margin:0;color:#d9cfb6}
+.arrives{display:block}
+.medals{list-style:none;padding:0;margin:30px 0 16px;display:grid;grid-template-columns:repeat(2,1fr);gap:22px 40px}
+.medals li{display:flex;gap:18px;align-items:center}
+.medal{flex:none;width:86px;height:86px;border-radius:50%;background:#f4ead4 url(/art/paper.jpg) center/300%;display:grid;place-items:center;box-shadow:0 0 0 2px #c9a24e,0 8px 20px rgba(0,0,0,.35);overflow:hidden}
+.medal img{width:78%}.medal .hand{font-family:"La Belle Aurore",cursive;color:#1c2a48;font-size:1.25rem;transform:rotate(-6deg)}.medal .hand.elf{font-family:"Homemade Apple",cursive;color:#2f5a45;font-size:1.15rem}
+.medals b{display:block;font-weight:600;font-size:1.15rem}.medals span{color:#cfc5ad}
+@media(max-width:900px){.nav-links,.sleeps{display:none}.nav-brand span{font-size:.82rem;max-width:9.5em}.nav-in{min-height:60px;gap:10px}.nav-cta{font-size:1rem;padding:.5em .9em;white-space:nowrap}.how,.medals{grid-template-columns:1fr}.counter-grid{padding-top:26px}}
+.order2{padding-top:40px}
+.medal .hand{font-size:1.02rem;white-space:nowrap}
