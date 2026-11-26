@@ -10,7 +10,7 @@ export default function AdminOrders({ orders, more, last, email, problem }) {
   const [busy, setBusy] = useState("");
   const f = find.trim().toLowerCase();
   const shown = orders.filter((o) => !f || o.email.toLowerCase().includes(f) || o.children.some((c) => (c.name + " " + c.town).toLowerCase().includes(f)));
-  const link = (sid) => `${location.origin}/letter/${sid}`;
+  const link = (sid) => `${location.origin}/${orders.find((x) => x.sid === sid)?.pack ? "download" : "letter"}/${sid}`;
   async function resend(o) {
     const to = prompt("Send the letter link to this address:", o.email); if (!to) return;
     setBusy(o.sid);
@@ -37,7 +37,7 @@ export default function AdminOrders({ orders, more, last, email, problem }) {
               <div>{o.email || "No email"}<br /><span className="eg">{when(o.when)}</span></div>
               <div>{o.tier}<br /><span className="eg">{gbp(o.amount)}</span></div>
               <div className="admin-acts">
-                <a className="btn ghost small" href={"/letter/" + o.sid} target="_blank" rel="noreferrer">Open letter</a>
+                <a className="btn ghost small" href={(o.pack ? "/download/" : "/letter/") + o.sid} target="_blank" rel="noreferrer">{o.pack ? "Open download" : "Open letter"}</a>
                 <button className="btn ghost small" onClick={() => copy(o)}>Copy link</button>
                 <button className="btn small" disabled={busy === o.sid} onClick={() => resend(o)}>{busy === o.sid ? "Sending…" : "Resend email"}</button>
                 {note[o.sid] && <span className="eg" role="status">{note[o.sid]}</span>}

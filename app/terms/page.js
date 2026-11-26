@@ -10,10 +10,11 @@ export default function Terms() {
     <p><b>Prices.</b> {Object.values(TIERS).map((t) => `${t.name} ${gbp(t.price)}`).join("; ")}. Each extra child on the same order is {gbp(EXTRA_CHILD)}. Prices are in pounds sterling and are charged once, at checkout.</p>
     <p><b>Delivery.</b> Your letter is made from the details you type and is delivered straight after payment, on screen and by a link sent to your email address. The letter says exactly what you enter.</p>
     <p><b>Cancelling.</b> You normally have 14 days to cancel an online purchase. Because your letter is personalised and you ask us at checkout to deliver it immediately, that right ends once the letter has been delivered.</p>
-    <p><b>Mistakes in your details.</b> The letter is made from exactly what you enter and cannot be changed after you order. Please check names and spellings carefully before you pay.</p>
+    <p><b>Mistakes in your details.</b> The letter is made from exactly what you enter, so please check names and spellings before you pay. If you notice a mistake afterwards, write to <a href={"mailto:" + CONTACT}>{CONTACT}</a> within 14 days of ordering and we will help you put it right.</p>
     <p><b>If something is not working.</b> If your letter does not arrive or does not work as described, write to <a href={"mailto:" + CONTACT}>{CONTACT}</a> within 14 days of ordering and we will put it right or refund you. This does not affect your legal rights.</p>
     <p><b>How long your letter is available.</b> Your private page and downloads are available for at least 60 days from the date of purchase. Download the PDF and image if you would like to keep them for longer.</p>
-    <p><b>Personal use.</b> The letter is for your own family’s private use and may not be resold.</p>
+    <p><b>Activity packs.</b> Packs bought from the shop are digital downloads, delivered straight after payment by a download link on screen and by email. Because you ask for immediate delivery, the 14-day right to cancel ends once the download has been made available. If a file does not open, write to us and we will put it right or refund you.</p>
+    <p><b>Personal use.</b> Letters and packs are for your own family’s private use and may not be resold or shared publicly.</p>
     <p><b>Who we are.</b> {SHOP} is operated by {BUSINESS}. Contact: <a href={"mailto:" + CONTACT}>{CONTACT}</a>. These terms are governed by the law of England and Wales.</p>
     <p><Link href="/privacy">Privacy and your child’s details</Link></p>
   </div></>);

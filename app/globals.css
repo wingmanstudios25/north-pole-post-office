@@ -230,3 +230,20 @@ html{scroll-behavior:smooth;scroll-padding-top:96px}
 @media(max-width:900px){.nav-links,.sleeps{display:none}.nav-brand span{font-size:.82rem;max-width:9.5em}.nav-in{min-height:60px;gap:10px}.nav-cta{font-size:1rem;padding:.5em .9em;white-space:nowrap}.how,.medals{grid-template-columns:1fr}.counter-grid{padding-top:26px}}
 .order2{padding-top:40px}
 .medal .hand{font-size:1.02rem;white-space:nowrap}
+/* ===== shop ===== */
+.shop{padding-top:44px;padding-bottom:80px}
+.shop h1{font-size:clamp(2.2rem,4.5vw,3.2rem);font-style:italic;margin-bottom:.3em}
+.packs{display:grid;grid-template-columns:repeat(3,1fr);gap:26px;margin-top:34px}
+.pack{background:var(--night2);border:1px solid #2f4d44;display:flex;flex-direction:column}
+.pack img{width:100%;display:block;aspect-ratio:210/297;object-fit:cover;object-position:top}
+.pack-in{padding:22px;display:flex;flex-direction:column;gap:8px;flex:1}
+.pack h2{font-size:1.55rem;margin:0}.pack p{margin:0;color:#d9cfb6}
+.pack ul{margin:4px 0;padding-left:1.1em;color:#d9cfb6;flex:1}
+.pack.got{flex-direction:row;max-width:640px;margin-top:26px}.pack.got img{width:210px;flex:none}
+@media(max-width:900px){.packs{grid-template-columns:1fr;max-width:420px}.pack.got{flex-direction:column}.pack.got img{width:100%}}
+.nav-links a,.nav-brand span,.nav-cta{white-space:nowrap}
+.nav-links{gap:18px}
+@media(max-width:1240px){.sleeps{display:none}}
+.shop-strip{background:#1b100a;border-top:1px solid #3a2414;border-bottom:1px solid #3a2414;text-align:center}
+.shop-strip .covers{display:flex;justify-content:center;gap:18px;margin:22px 0}
+.shop-strip .covers img{width:150px;box-shadow:0 14px 34px rgba(0,0,0,.5)}

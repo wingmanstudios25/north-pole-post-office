@@ -56,7 +56,7 @@ export default function Order() {
           </section>
 
           <section className="step"><h2><span className="num">2</span>Tell us about your child</h2>
-            <p className="eg">Father Christmas will use these words exactly as you type them. Letters cannot be changed after you order, so please check the spelling.</p>
+            <p className="eg">Father Christmas will use these words exactly as you type them, so please check the spelling.</p>
             <div className="tabs">
               {children.map((c, i) => <button type="button" key={i} className={i === active ? "on" : ""} onClick={() => setActive(i)}>{c.name || "Child " + (i + 1)}</button>)}
               {children.length < MAX_CHILDREN && <button type="button" onClick={() => { setChildren((cs) => [...cs, blank()]); setActive(children.length); }}>Add another child ({gbp(EXTRA_CHILD)})</button>}

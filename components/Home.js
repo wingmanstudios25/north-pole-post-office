@@ -4,6 +4,7 @@ import Link from "next/link";
 import Envelope from "@/components/Envelope";
 import Snow from "@/components/Snow";
 import Nav from "@/components/Nav";
+import { PRODUCTS } from "@/lib/products";
 import { SHOP, TIERS, EXTRA_CHILD, BUSINESS, CONTACT } from "@/lib/order";
 
 const gbp = (p) => "£" + (p / 100).toFixed(2);
@@ -19,7 +20,7 @@ const QUESTIONS = [
   ["Can I print it?", "Yes. Your download pack has the letter as an A4 PDF made for home printers, an envelope front and wax seal to cut out, and a Nice List certificate. Print, fold, seal and leave it on the doormat."],
   ["What does “read by Father Christmas” mean?", "Your private page shows Father Christmas’s own hands opening the envelope at his desk. He lifts out your child’s letter and reads it to them, with each word lighting up as he goes."],
   ["Can I order for more than one child?", "Yes, up to four on one order. Each child gets their own letter, written about them."],
-  ["Can I change the letter after I have ordered?", "No. The letter is made from exactly what you type, the moment you pay, so please check names and spellings carefully before you press pay."],
+  ["What if I make a spelling mistake?", "The letter is made from exactly what you type, so please check it before you pay. If something slips through, write to us within 14 days and we will help you put it right."],
   ["What do you do with my child’s details?", "We use them to make the letter and nothing else. We never ask for a surname, address or photograph, and recordings are deleted after 60 days."],
 ];
 
@@ -119,6 +120,14 @@ export default function Home() {
           <p className="centre lead" style={{ margin: "26px auto 6px" }}>Every order comes with a download pack: the letter to print, an envelope to cut out and seal, and a Nice List certificate with their name on it.</p>
           <p className="centre fine">Each extra child on the same order is {gbp(EXTRA_CHILD)}. Delivered on screen and by email, straight after payment.</p>
         </section>
+
+        {PRODUCTS.length > 0 && (
+          <section className="shop-strip"><div className="wrap">
+            <h2>Christmas packs to print at home</h2>
+            <p className="lead" style={{ margin: "0 auto" }}>Games, quizzes, colouring and things to make, for Christmas Eve and Christmas Day.</p>
+            <div className="covers">{PRODUCTS.map((p) => <Link key={p.id} href="/shop"><img src={p.cover} alt={"The cover of " + p.name} /></Link>)}</div>
+            <Link className="btn ghost" href="/shop">See the packs</Link>
+          </div></section>)}
 
         <section className="wrap questions" id="questions">
           <h2>Questions parents ask</h2>
