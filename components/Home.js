@@ -19,7 +19,7 @@ const QUESTIONS = [
   ["Can I print it?", "Yes. Your download pack has the letter as an A4 PDF made for home printers, an envelope front and wax seal to cut out, and a Nice List certificate. Print, fold, seal and leave it on the doormat."],
   ["What does “read by Father Christmas” mean?", "Your private page shows Father Christmas’s own hands opening the envelope at his desk. He lifts out your child’s letter and reads it to them, with each word lighting up as he goes."],
   ["Can I order for more than one child?", "Yes, up to four on one order. Each child gets their own letter, written about them."],
-  ["What if I make a spelling mistake?", "Write to us within 14 days and we will correct the letter and send it again."],
+  ["Can I change the letter after I have ordered?", "No. The letter is made from exactly what you type, the moment you pay, so please check names and spellings carefully before you press pay."],
   ["What do you do with my child’s details?", "We use them to make the letter and nothing else. We never ask for a surname, address or photograph, and recordings are deleted after 60 days."],
 ];
 
