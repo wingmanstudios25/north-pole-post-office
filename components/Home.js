@@ -15,7 +15,7 @@ const DETAILS = [
 ];
 const QUESTIONS = [
   ["How does the letter reach me?", "It opens on screen as soon as you have paid, and we email you a private link to it. Nothing is sent by post, so there is no last posting date."],
-  ["Can I print it?", "Yes. You get an A4 PDF made for home printers, and an image. Print it, fold it in three and leave it on the doormat."],
+  ["Can I print it?", "Yes. Your download pack has the letter as an A4 PDF made for home printers, an envelope front and wax seal to cut out, and a Nice List certificate. Print, fold, seal and leave it on the doormat."],
   ["What does “read by Father Christmas” mean?", "Your private page shows Father Christmas’s own hands opening the envelope at his desk. He lifts out your child’s letter and reads it to them, with each word lighting up as he goes."],
   ["Can I order for more than one child?", "Yes, up to four on one order. Each child gets their own letter, written about them."],
   ["What if I make a spelling mistake?", "Write to us within 14 days and we will correct the letter and send it again."],
@@ -114,6 +114,7 @@ export default function Home() {
                 <Link className={"btn" + (k === "read" ? "" : " ghost")} href={"/order?tier=" + k + (clean ? "&name=" + encodeURIComponent(clean) : "")}>Choose this letter</Link>
               </div>))}
           </div>
+          <p className="centre lead" style={{ margin: "26px auto 6px" }}>Every order comes with a download pack: the letter to print, an envelope to cut out and seal, and a Nice List certificate with their name on it.</p>
           <p className="centre fine">Each extra child on the same order is {gbp(EXTRA_CHILD)}. Delivered on screen and by email, straight after payment.</p>
         </section>
 

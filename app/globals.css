@@ -192,3 +192,13 @@ footer .wrap{line-height:1.9}
 @media(max-width:900px){.counter-grid,.arrives,.reads-grid,.order2{grid-template-columns:1fr;gap:36px}.tickets{grid-template-columns:1fr}.stack{max-width:440px;margin:0 auto;width:100%}.side{position:static;padding-top:0;max-width:340px;margin:0 auto}main>section{padding:56px 0}main>section.wrap{padding:56px 22px}.letter-pins{max-width:460px;margin:0 auto}
  .counter-grid{gap:0;padding:14px 0 80px}.counter-grid>div:first-child{display:contents}.counter-grid h1{order:1}.counter-grid .lead{order:2}.counter-grid .stack{order:3;max-width:330px;aspect-ratio:1.5;margin:18px auto 0}.counter-grid .who{order:4;margin-top:18px}.stack .sheet-peek{display:none}.env-btn{left:3%;bottom:10%;width:94%}}
 @media (prefers-reduced-motion:reduce){.flip3d,.lightbox,.lightbox-in{transition:none;animation:none}.env-btn,.stack .sheet-peek,.envelope .pm,.pin span{transition:none}}
+/* ===== private orders page ===== */
+.admin{padding-top:40px;padding-bottom:80px}
+.admin h1{font-size:2.6rem;font-style:italic}
+.admin-top{display:flex;justify-content:space-between;align-items:center}
+.admin-find{display:flex;gap:14px;flex-wrap:wrap;margin:18px 0 22px}
+.admin-find>input{flex:1 1 260px}.admin-find form{display:flex;gap:8px;flex:1 1 320px}.admin-find form input{flex:1}
+.admin-row{display:grid;grid-template-columns:1.1fr 1.4fr 1.3fr auto;gap:18px;align-items:center;padding:16px 0;border-top:1px solid #2f4d44}
+.admin-acts{display:flex;gap:8px;flex-wrap:wrap;align-items:center;justify-content:flex-end;max-width:360px}
+.tag-test{margin-left:8px;font-size:.75rem;background:#5a4a1a;color:#f3dfb4;padding:.1em .6em;border-radius:3px}
+@media(max-width:900px){.admin-row{grid-template-columns:1fr;gap:8px}.admin-acts{justify-content:flex-start;max-width:none}}
