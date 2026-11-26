@@ -1,0 +1,41 @@
+/* ===== The stationery (design tokens live here) ===== */
+.lt-page{--paper:#f4ead4;--ink:#2a211a;--sepia:#6b5638;--red:#8a1f1f;--gold:#a8842f;--green:#2f5a45;--pen:#1c2a48;
+  --serif:"Cormorant Garamond",Garamond,Georgia,serif;--caps:"IM Fell English SC","Cormorant Garamond",serif;
+  --signature:"Mrs Saint Delafield",cursive;--hand:"La Belle Aurore",cursive;--elf-hand:"Homemade Apple",cursive;
+  width:210mm;height:297mm;position:relative;overflow:hidden;background:var(--paper);color:var(--ink);font-family:var(--serif);text-align:left;
+  -webkit-print-color-adjust:exact;print-color-adjust:exact}
+.lt-page.plain{background:#fff}
+.lt-page img{max-width:none}
+.lt-paper{position:absolute;inset:0;width:100%;height:100%}
+.lt-wm{position:absolute;left:50%;top:53%;width:118mm;transform:translate(-50%,-50%);opacity:.13}
+.lt-head{position:absolute;top:11mm;left:0;right:0;text-align:center}
+.lt-crest{width:35mm;display:block;margin:0 auto}
+.lt-office{font-family:var(--caps);font-size:15pt;letter-spacing:.3em;margin:1.6mm 0 0 .3em;color:var(--red)}
+.lt-addr{font-family:var(--caps);font-size:8.6pt;letter-spacing:.34em;margin:1.3mm 0 0 .34em;color:var(--sepia)}
+.lt-rule{width:112mm;display:block;margin:2.6mm auto 0}
+.lt-ref{position:absolute;top:17mm;left:17mm;font-family:var(--caps);font-size:6.6pt;letter-spacing:.2em;line-height:1.75;color:var(--sepia)}
+.lt-ref .line{border-bottom:.2mm solid #b9a57c;display:inline-block;min-width:21mm;height:3.4mm;vertical-align:bottom;position:relative}
+.lt-ref .hw{position:absolute;left:1mm;bottom:-1.3mm;font-family:var(--hand);font-size:12.5pt;letter-spacing:0;color:var(--pen);white-space:nowrap}
+.lt-ref .note{font-family:var(--hand);font-size:12.5pt;letter-spacing:0;color:var(--pen);transform:rotate(-4deg);transform-origin:left;margin:1.6mm 0 0 2mm;white-space:nowrap}
+.lt-post{position:absolute;top:12.5mm;right:15mm;width:62mm;height:34mm}
+.lt-post .stamp{position:absolute;right:0;top:0;width:24mm;transform:rotate(2.2deg);box-shadow:.3mm .4mm 1mm rgba(70,45,10,.28)}
+.lt-post .pm{position:absolute;left:-2mm;top:5mm;width:61mm;mix-blend-mode:multiply;opacity:.82;transform:rotate(-4deg)}
+.lt-post .pmdate{position:absolute;left:-2mm;top:5mm;width:24.4mm;height:24.4mm;transform:rotate(-4deg);transform-origin:30.5mm 12.2mm;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  font-family:var(--caps);font-size:7pt;line-height:1.12;letter-spacing:.06em;color:#2b2622;opacity:.78;mix-blend-mode:multiply;text-align:center}
+.lt-letter{position:absolute;top:69mm;left:27mm;right:27mm;bottom:36mm;font-size:12.6pt;line-height:1.46;font-weight:500;overflow:hidden}
+.lt-date{text-align:right;font-style:italic;font-size:.94em;color:#4a3b2a;margin-bottom:.9em}
+.lt-salute{font-size:1.3em;font-style:italic;margin:0 0 .55em}
+.lt-letter p{margin:0 0 .62em;text-align:justify;text-wrap:pretty}
+.lt-letter p.b{text-indent:1.4em}
+.lt-close{margin-top:1em}
+.lt-sig{font-family:var(--signature);font-size:3.5em;line-height:.9;color:var(--pen);transform:rotate(-3deg);transform-origin:left;margin:.3em 0 0 .25em;white-space:nowrap;width:max-content;position:relative}
+.lt-sig svg{position:absolute;left:-2%;bottom:-.02em;width:104%;height:.28em;overflow:visible}
+.lt-ps{font-family:var(--hand);font-size:1.28em;line-height:1.25;color:var(--pen);margin-top:.5em;max-width:108mm;transform:rotate(-.6deg);transform-origin:left}
+.lt-seal{position:absolute;right:28mm;bottom:40mm;width:39mm}
+.lt-elf{position:absolute;left:19mm;bottom:14.5mm;width:92mm;font-family:var(--elf-hand);font-size:7.7pt;line-height:1.75;color:var(--green);transform:rotate(-2.6deg);transform-origin:left}
+.lt-hs{position:absolute;right:19mm;bottom:11mm;width:43mm;transform:rotate(7deg);mix-blend-mode:multiply;opacity:.6}
+.lt-foot{position:absolute;left:0;right:0;bottom:7.5mm;text-align:center;font-family:var(--caps);font-size:5.8pt;letter-spacing:.3em;color:#8b744a}
+/* read-aloud highlight */
+.reading [data-w]{transition:background-color .25s, box-shadow .25s;border-radius:2px}
+.reading [data-w].now{background:rgba(201,162,78,.38);box-shadow:0 0 0 .12em rgba(201,162,78,.38)}
+.sheet{width:100%;overflow:hidden;position:relative}
