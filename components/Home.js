@@ -104,7 +104,7 @@ export default function Home() {
               <p>The words light up as he reads, so little ones can follow along. Watch it as many times as you like, on a phone, a tablet or the television.</p>
               <p className="fine">Included with “{TIERS.read.name}” and “{TIERS.full.name}”.</p>
             </div>
-            <img className="hands" src="/art/hands-letter.jpg" alt="Father Christmas’s white-gloved hands holding a letter up by firelight at his desk, with a candle and a snowy window behind." />
+            <img className="hands" src="/art/hands-letter.jpg?v=2" alt="Father Christmas’s white-gloved hands holding a letter up by firelight at his desk, with a candle and a snowy window behind." />
           </div>
         </section>
 
