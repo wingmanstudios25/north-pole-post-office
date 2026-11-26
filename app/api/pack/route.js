@@ -28,12 +28,10 @@ export async function GET(req) {
       renderSheets(u.origin, sid, jobs),
       order.voice ? Promise.all(order.letters.map(async (k) => { try { const v = await getOrMakeVoice(order, c, k); if (!v.url || v.url.startsWith("data:")) return null; const r = await fetch(v.url.startsWith("/") ? u.origin + v.url : v.url); return r.ok ? Buffer.from(await r.arrayBuffer()) : null; } catch { return null; } })) : [],
     ]);
-    const fun = await fetch(u.origin + "/pack/Christmas-Day-Fun-Pack.pdf").then((r) => (r.ok ? r.arrayBuffer() : null)).catch(() => null);
     const zip = new JSZip();
-    if (fun) zip.file("Christmas Day Fun Pack.pdf", Buffer.from(fun));
     files.forEach((f, i) => zip.file(names[i], f));
     voices.forEach((v, i) => v && zip.file(`${label(order.letters[i])} - read by Father Christmas.mp3`, v));
-    zip.file("Read me first.txt", `${child.name}'s pack from ${SHOP}\r\n\r\n1. Print the letter on A4. In the print box choose "Actual size" and switch on "Background graphics" if you see it.\r\n2. Print "Envelope to cut out", cut out the pieces and follow the steps on that page.\r\n3. The Nice List certificate is for the fridge, the bedroom wall or the memory box.\r\n${order.voice ? "4. The MP3 is Father Christmas reading the letter. Play it any time, even without the internet.\r\n" : ""}\r\nAnything not right? Write to ${CONTACT} and we will put it right.\r\n`);
+    zip.file("Read me first.txt", `${child.name}'s pack from ${SHOP}\r\n\r\n1. Print the letter on A4. In the print box choose "Actual size" and switch on "Background graphics" if you see it.\r\n2. Print "Envelope to cut out", cut out the pieces and follow the steps on that page.\r\n3. The Nice List certificate is for the fridge, the bedroom wall or the memory box.\r\n${order.voice ? "4. The MP3 is Father Christmas reading the letter. Play it any time, even without the internet.\r\n" : ""}5. For Christmas Day itself, press "Christmas Day Fun Pack" on your letter page: 21 pages of quizzes, bingo, charades, a scavenger hunt, jokes and things to make.\r\n\r\nAnything not right? Write to ${CONTACT} and we will put it right.\r\n`);
     const data = await zip.generateAsync({ type: "nodebuffer", compression: "STORE" });
     if (hasBlob) { const b = await put(`${key}/North-Pole-pack-for-${safe}.zip`, data, { access: "public", contentType: "application/zip", addRandomSuffix: true }); return NextResponse.redirect(b.downloadUrl || b.url, 302); }
     return new NextResponse(data, { headers: { "content-type": "application/zip", "content-disposition": `attachment; filename="North-Pole-pack-for-${safe}.zip"`, "cache-control": "private, no-store" } });

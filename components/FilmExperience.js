@@ -119,7 +119,7 @@ export default function FilmExperience({ sid, order, c, k, films }) {
         <div className="bar">
           {voice?.url && (playing ? <button className="btn" onClick={pause}>Pause the reading</button> : <button className="btn" onClick={play}>Hear Father Christmas read it</button>)}
           <button className="btn ghost" onClick={again}>Open it again</button>
-          {!order.sample && <><a className="btn" href={`/api/pack?sid=${encodeURIComponent(sid)}&c=${c}`} onClick={() => setStatus("Wrapping up your pack. This takes about fifteen seconds…")}>Download the full pack</a><a className="btn ghost" href={file("pdf")}>Letter PDF only</a></>}
+          {!order.sample && <><a className="btn" href={`/api/pack?sid=${encodeURIComponent(sid)}&c=${c}`} onClick={() => setStatus("Wrapping up your pack. This takes about fifteen seconds…")}>Download the full pack</a><a className="btn ghost" href="/pack/Christmas-Day-Fun-Pack.pdf" download>Christmas Day Fun Pack</a><a className="btn ghost" href={file("pdf")}>Letter PDF only</a></>}
           {others.map((o) => <a className="btn ghost" key={o.ci + o.lk} href={`?c=${o.ci}&k=${o.lk}`}>{o.label}</a>)}
           {order.sample && <a className="btn" href="/order">Write a letter for your child</a>}
         </div>)}
