@@ -5,6 +5,7 @@ import Envelope from "@/components/Envelope";
 import Snow from "@/components/Snow";
 import Nav from "@/components/Nav";
 import { PRODUCTS } from "@/lib/products";
+import Packs from "@/components/Packs";
 import { SHOP, TIERS, EXTRA_CHILD, BUSINESS, CONTACT } from "@/lib/order";
 
 const gbp = (p) => "£" + (p / 100).toFixed(2);
@@ -122,11 +123,10 @@ export default function Home() {
         </section>
 
         {PRODUCTS.length > 0 && (
-          <section className="shop-strip"><div className="wrap">
+          <section className="shop-strip" id="packs"><div className="wrap">
             <h2>Christmas packs to print at home</h2>
-            <p className="lead" style={{ margin: "0 auto" }}>Games, quizzes, colouring and things to make, for Christmas Eve and Christmas Day.</p>
-            <div className="covers">{PRODUCTS.map((p) => <Link key={p.id} href="/shop"><img src={p.cover} alt={"The cover of " + p.name} /></Link>)}</div>
-            <Link className="btn ghost" href="/shop">See the packs</Link>
+            <p className="lead" style={{ margin: "0 auto" }}>Games, quizzes, colouring and things to make, for Christmas Eve and Christmas Day. Tap a cover to see what’s inside.</p>
+            <Packs />
           </div></section>)}
 
         <section className="wrap questions" id="questions">
