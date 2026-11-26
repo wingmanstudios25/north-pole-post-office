@@ -270,3 +270,21 @@ html{scroll-behavior:smooth;scroll-padding-top:96px}
 .basket-row img{width:70px;display:block}.basket-row b{display:block;font-size:1.15rem}.basket-price{font-size:1.3rem;color:var(--gold)}
 .pack.got{align-items:center}.pack.got img{width:150px}
 @media(max-width:900px){.packs{grid-template-columns:1fr;max-width:420px}.inside-grid{grid-template-columns:1fr}.inside-cover{max-width:200px}.peek{grid-template-columns:repeat(2,1fr)}.basket-row{grid-template-columns:54px 1fr auto}.basket-row img{width:54px}.basket-row .btn{grid-column:2/4;justify-self:start}}
+/* bolder menu options */
+.nav-in{min-height:78px}
+.nav-links{gap:8px;margin-left:14px}
+.nav-links a{font-family:"IM Fell English SC","Cormorant Garamond",serif;font-size:1.08rem;font-weight:600;letter-spacing:.05em;color:#fff;padding:8px 14px;border:1px solid rgba(246,231,198,.45);border-radius:4px;background:rgba(0,0,0,.16);border-bottom-width:1px;transition:background .15s,color .15s}
+.nav-links a:hover,.nav-links a:focus-visible{background:#f4ead4;color:#7a1a1a;border-color:#c9a24e}
+.nav-basket{font-weight:600;border:1px solid rgba(246,231,198,.45);border-radius:4px;padding:8px 12px;text-decoration:none;background:rgba(0,0,0,.16)}
+@media(max-width:1320px){.sleeps{display:none}}
+@media(max-width:1060px){.nav-brand span{display:none}}
+@media(max-width:900px){
+  .nav-in{flex-wrap:wrap;min-height:0;padding-top:8px;padding-bottom:8px;row-gap:8px}
+  .nav-brand span{display:inline}
+  .nav-links{display:flex;order:3;width:100%;margin:0;overflow-x:auto;gap:6px;padding-bottom:2px;scrollbar-width:none}
+  .nav-links::-webkit-scrollbar{display:none}
+  .nav-links a{font-size:.95rem;padding:6px 11px;flex:none}
+  html{scroll-padding-top:130px}
+}
+@media(max-width:1500px){.sleeps{display:none}}
+@media(max-width:900px){.nav-brand{min-width:0;flex:1 1 0}.nav-brand span{font-size:.8rem;letter-spacing:.1em;white-space:normal;line-height:1.15}.nav-right{flex:none}}
