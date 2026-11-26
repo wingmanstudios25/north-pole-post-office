@@ -126,7 +126,7 @@ export default function Home() {
         {PRODUCTS.length > 0 && (
           <section className="shop-strip" id="packs"><div className="wrap">
             <h2>Christmas packs to print at home</h2>
-            <p className="lead" style={{ margin: "0 auto" }}>Games, quizzes, colouring and things to make, for Christmas Eve and Christmas Day. Tap a cover to see what’s inside.</p>
+            <p className="lead" style={{ margin: "0 auto" }}>Games, quizzes, colouring, things to make and a month of elf ideas. Tap a cover to see what’s inside.</p>
             <Offer />
             <Packs />
           </div></section>)}

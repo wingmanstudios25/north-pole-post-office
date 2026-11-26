@@ -249,7 +249,7 @@ html{scroll-behavior:smooth;scroll-padding-top:96px}
 .shop-strip .covers img{width:150px;box-shadow:0 14px 34px rgba(0,0,0,.5)}
 /* ===== pack cards, look-inside and basket ===== */
 .shop-strip{text-align:left}.shop-strip h2,.shop-strip>.wrap>.lead{text-align:center}
-.packs{grid-template-columns:repeat(2,minmax(0,1fr));max-width:860px;margin-left:auto;margin-right:auto}
+.packs{grid-template-columns:repeat(3,minmax(0,1fr));max-width:1180px;margin-left:auto;margin-right:auto}
 .pack-cover{all:unset;display:block;position:relative;cursor:pointer;overflow:hidden}
 .pack-cover img{transition:transform .35s ease}
 .pack-cover:hover img,.pack-cover:focus-visible img{transform:scale(1.03)}
