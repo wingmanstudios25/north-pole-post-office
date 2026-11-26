@@ -5,7 +5,7 @@ import Envelope from "@/components/Envelope";
 import Snow from "@/components/Snow";
 import Nav from "@/components/Nav";
 import { PRODUCTS } from "@/lib/products";
-import Packs from "@/components/Packs";
+import Packs, { Offer } from "@/components/Packs";
 import { SHOP, TIERS, EXTRA_CHILD, BUSINESS, CONTACT } from "@/lib/order";
 
 const gbp = (p) => "£" + (p / 100).toFixed(2);
@@ -115,6 +115,7 @@ export default function Home() {
               <div className={"ticket" + (k === "read" ? " best" : "")} key={k}>
                 {k === "read" && <div className="tag">Most chosen</div>}
                 <h3>{t.name}</h3><div className="price">{gbp(t.price)}</div><p>{t.blurb}</p>
+                {PRODUCTS.length > 0 && <div className="gift">{t.freePacks === 0 ? "Add any Christmas pack for 99p" : t.freePacks === 1 ? "1 Christmas pack free" : "2 Christmas packs free"}</div>}
                 <Link className={"btn" + (k === "read" ? "" : " ghost")} href={"/order?tier=" + k + (clean ? "&name=" + encodeURIComponent(clean) : "")}>Choose this letter</Link>
               </div>))}
           </div>
@@ -126,6 +127,7 @@ export default function Home() {
           <section className="shop-strip" id="packs"><div className="wrap">
             <h2>Christmas packs to print at home</h2>
             <p className="lead" style={{ margin: "0 auto" }}>Games, quizzes, colouring and things to make, for Christmas Eve and Christmas Day. Tap a cover to see what’s inside.</p>
+            <Offer />
             <Packs />
           </div></section>)}
 

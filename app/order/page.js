@@ -3,7 +3,8 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import Envelope from "@/components/Envelope";
 import Nav from "@/components/Nav";
-import { SHOP, TIERS, FIELDS, LETTERS, EXTRA_CHILD, MAX_CHILDREN, priceFor, cleanChild, childErrors } from "@/lib/order";
+import { SHOP, TIERS, FIELDS, LETTERS, EXTRA_CHILD, ADDON_PACK, MAX_CHILDREN, priceFor, cleanChild, childErrors } from "@/lib/order";
+import { PRODUCTS } from "@/lib/products";
 
 const gbp = (p) => "£" + (p / 100).toFixed(2);
 const blank = () => Object.fromEntries(FIELDS.map((f) => [f.key, ""]));
@@ -13,6 +14,7 @@ export default function Order() {
   const [kind, setKind] = useState("classic");
   const [children, setChildren] = useState([blank()]);
   const [active, setActive] = useState(0);
+  const [packs, setPacks] = useState([]);
   const [ok, setOk] = useState(false);
   const [now, setNow] = useState(false);
   const [busy, setBusy] = useState(false);
@@ -20,6 +22,8 @@ export default function Order() {
   useEffect(() => { const q = new URLSearchParams(location.search); if (TIERS[q.get("tier")]) setTier(q.get("tier")); const n = (q.get("name") || "").slice(0, 24); if (n) setChildren([{ ...blank(), name: n }]); }, []);
   const set = (k, v) => setChildren((cs) => cs.map((c, i) => (i === active ? { ...c, [k]: v } : c)));
   const child = children[active];
+  const free = TIERS[tier].freePacks, pence = (p) => (p < 100 ? p + "p" : gbp(p));
+  const total = priceFor(tier, children.length, packs.length);
 
   async function pay() {
     setError("");
@@ -30,7 +34,7 @@ export default function Order() {
     if (!now) { setError("Please tick the box to confirm you would like the letter delivered straight away."); return; }
     setBusy(true);
     try {
-      const r = await fetch("/api/checkout", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ tier, kind, children: cleaned }) });
+      const r = await fetch("/api/checkout", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ tier, kind, children: cleaned, packs }) });
       const j = await r.json();
       if (j.url) location.href = j.url; else { setError(j.error || "Something went wrong starting the payment. Nothing has been charged; please try again."); setBusy(false); }
     } catch { setError("We could not reach the payment page. Nothing has been charged; please check your connection and try again."); setBusy(false); }
@@ -42,7 +46,7 @@ export default function Order() {
       <div className="order2">
         <form onSubmit={(e) => { e.preventDefault(); pay(); }}>
           <h1>Write their letter</h1>
-          <p className="lead">Three short steps. It takes about three minutes.</p>
+          <p className="lead">A few short steps. It takes about three minutes.</p>
 
           <section className="step"><h2><span className="num">1</span>Choose the letter</h2>
             {Object.entries(TIERS).map(([k, t]) => (
@@ -72,12 +76,23 @@ export default function Order() {
               </div>); })}
           </section>
 
-          <section className="step"><h2><span className="num">3</span>Check and pay</h2>
-            <div className="total"><span>{TIERS[tier].name}{children.length > 1 ? ` for ${children.length} children` : ""}</span><span>{gbp(priceFor(tier, children.length))}</span></div>
+          {PRODUCTS.length > 0 && (<section className="step"><h2><span className="num">3</span>Add a Christmas pack</h2>
+            <p className="offer">{free === 0 ? `With this letter, add any pack for just ${pence(ADDON_PACK)} instead of £4.99.` : free === 1 ? `This letter comes with one pack free. Choose yours. A second is only ${pence(ADDON_PACK)}.` : `This letter comes with two packs free. Choose yours.`}</p>
+            {PRODUCTS.map((p) => { const i = packs.indexOf(p.id), on = i >= 0, isFree = on ? i < free : packs.length < free; return (
+              <label className={"opt addon" + (on ? " on" : "")} key={p.id}>
+                <input type="checkbox" checked={on} onChange={() => setPacks((a) => (on ? a.filter((x) => x !== p.id) : [...a, p.id]))} />
+                <img src={p.cover} alt="" /><div><b>{p.name}</b><span>{p.blurb} {p.pages} pages to print.</span></div>
+                <em>{isFree ? "Free" : pence(ADDON_PACK)}<s>£4.99</s></em>
+              </label>); })}
+            {free > 0 && packs.length === 0 && <p className="eg">You have not chosen your free {free > 1 ? "packs" : "pack"} yet.</p>}
+          </section>)}
+
+          <section className="step"><h2><span className="num">{PRODUCTS.length > 0 ? 4 : 3}</span>Check and pay</h2>
+            <div className="total"><span>{TIERS[tier].name}{children.length > 1 ? ` for ${children.length} children` : ""}{packs.length ? `, with ${packs.length} Christmas ${packs.length > 1 ? "packs" : "pack"}` : ""}</span><span>{gbp(total)}</span></div>
             <label className="check"><input type="checkbox" checked={ok} onChange={(e) => setOk(e.target.checked)} /><span>I am this child’s parent or guardian, and I am happy for these details to be used to make the letter. <Link href="/privacy">How we look after them</Link>.</span></label>
             <label className="check"><input type="checkbox" checked={now} onChange={(e) => setNow(e.target.checked)} /><span>Please deliver my letter straight after payment. I understand that once it has been delivered I can no longer cancel under the 14-day cooling-off period. <Link href="/terms">Terms and refunds</Link>.</span></label>
             {error && <div className="err" role="alert">{error}</div>}
-            <button className="btn big" disabled={busy}>{busy ? "Taking you to payment…" : "Pay " + gbp(priceFor(tier, children.length)) + " and receive the letter"}</button>
+            <button className="btn big" disabled={busy}>{busy ? "Taking you to payment…" : "Pay " + gbp(total) + " and receive the letter"}</button>
             <p className="eg">You pay on Stripe’s secure page. Your letter opens as soon as you have paid.</p>
           </section>
         </form>

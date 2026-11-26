@@ -23,7 +23,7 @@ export default function Packs() {
         {PRODUCTS.map((p) => (
           <div className="pack" key={p.id}>
             <button type="button" className="pack-cover" onClick={() => setOpen(p)} aria-label={"See what is inside the " + p.name}><img src={p.cover} alt={"The front cover of the " + p.name} /><span>See what’s inside</span></button>
-            <div className="pack-in"><h3>{p.name}</h3><p>{p.blurb}</p><p className="fine">{p.pages} pages to print on A4. Download straight after payment.</p><div className="pack-price">{gbp(p.price)}</div>{actions(p)}</div>
+            <div className="pack-in"><h3>{p.name}</h3><p>{p.blurb}</p><p className="fine">{p.pages} pages to print on A4. Download straight after payment.</p><div className="pack-price">{gbp(p.price)} <small>or free with a letter read by Father Christmas</small></div>{actions(p)}</div>
           </div>))}
       </div>
       {open && (
@@ -39,5 +39,23 @@ export default function Packs() {
           </div>
         </div>)}
     </>
+  );
+}
+
+// The headline offer: packs are free, or 99p, with a letter.
+export function Offer() {
+  return (
+    <div className="offer-banner">
+      <div className="burst" aria-hidden="true"><span>FREE</span><small>with a letter</small></div>
+      <div>
+        <h3>Get your pack free with a letter from Father Christmas</h3>
+        <ul>
+          <li><b>One pack free</b> with The Letter, Read by Father Christmas (£9.99)</li>
+          <li><b>Two packs free</b> with The Full Christmas (£14.99)</li>
+          <li><b>Any pack for 99p</b> instead of £4.99 with The Letter (£5.99)</li>
+        </ul>
+      </div>
+      <Link className="btn" href="/order">Order a letter and choose your pack</Link>
+    </div>
   );
 }
