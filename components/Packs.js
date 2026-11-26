@@ -52,7 +52,7 @@ export function Offer() {
         <ul>
           <li><b>One pack free</b> with The Letter, Read by Father Christmas (£9.99)</li>
           <li><b>Two packs free</b> with The Full Christmas (£14.99)</li>
-          <li><b>Any pack for 99p</b> instead of £4.99 with The Letter (£5.99)</li>
+          <li><b>Any pack for 99p</b> instead of full price with The Letter (£5.99)</li>
         </ul>
       </div>
       <Link className="btn" href="/order">Order a letter and choose your pack</Link>

@@ -77,12 +77,12 @@ export default function Order() {
           </section>
 
           {PRODUCTS.length > 0 && (<section className="step"><h2><span className="num">3</span>Add a Christmas pack</h2>
-            <p className="offer">{free === 0 ? `With this letter, add any pack for just ${pence(ADDON_PACK)} instead of £4.99.` : free === 1 ? `This letter comes with one pack free. Choose yours. A second is only ${pence(ADDON_PACK)}.` : `This letter comes with two packs free. Choose yours.`}</p>
+            <p className="offer">{free === 0 ? `With this letter, add any pack for just ${pence(ADDON_PACK)} instead of the full price.` : free === 1 ? `This letter comes with one pack free. Choose yours. A second is only ${pence(ADDON_PACK)}.` : `This letter comes with two packs free. Choose yours.`}</p>
             {PRODUCTS.map((p) => { const i = packs.indexOf(p.id), on = i >= 0, isFree = on ? i < free : packs.length < free; return (
               <label className={"opt addon" + (on ? " on" : "")} key={p.id}>
                 <input type="checkbox" checked={on} onChange={() => setPacks((a) => (on ? a.filter((x) => x !== p.id) : [...a, p.id]))} />
                 <img src={p.cover} alt="" /><div><b>{p.name}</b><span>{p.blurb} {p.pages} pages to print.</span></div>
-                <em>{isFree ? "Free" : pence(ADDON_PACK)}<s>£4.99</s></em>
+                <em>{isFree ? "Free" : pence(ADDON_PACK)}<s>{gbp(p.price)}</s></em>
               </label>); })}
             {free > 0 && packs.length === 0 && <p className="eg">You have not chosen your free {free > 1 ? "packs" : "pack"} yet.</p>}
           </section>)}
