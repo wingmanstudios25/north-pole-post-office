@@ -53,7 +53,7 @@ export default function Home() {
                   <button className="btn">{clean ? `Write ${clean}’s letter` : "Write their letter"}</button>
                 </div>
                 <p className="hint">Watch the envelope as you type.</p>
-                <ul className="promises"><li>Delivered the moment you pay</li><li>Secure payment by Stripe</li><li>Any mistake corrected free</li></ul>
+                <ul className="promises"><li>Delivered the moment you pay</li><li>Secure payment by Stripe</li></ul>
               </form>
             </div>
             <div className="stack" ref={stack} onPointerMove={tilt} onPointerLeave={rest}>
