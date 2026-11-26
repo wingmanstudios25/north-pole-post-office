@@ -22,6 +22,6 @@ export async function GET(req) {
     const data = type === "pdf" ? await page.pdf({ preferCSSPageSize: true, printBackground: true }) : await page.screenshot({ type: "png", clip: { x: 0, y: 0, width: 794, height: 1123 } });
     const name = `Letter-from-Father-Christmas-${order.children[c].name.replace(/[^A-Za-z0-9]+/g, "-") || "child"}${k === "eve" ? "-Christmas-Eve" : ""}.${type}`;
     return new NextResponse(data, { headers: { "content-type": type === "pdf" ? "application/pdf" : "image/png", "content-disposition": `attachment; filename="${name}"`, "cache-control": "private, no-store" } });
-  } catch (e) { console.error(e); return new NextResponse("We could not make the file just now. Please try again in a moment.", { status: 500 }); }
+  } catch (e) { console.error(e); return new NextResponse("We could not make the file just now. Please try again in a moment." + (order.sample && q.get("debug") ? "\n" + String(e?.message || e).slice(0, 600) : ""), { status: 500 }); }
   finally { await browser?.close(); }
 }

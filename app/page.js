@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { SHOP, TIERS, EXTRA_CHILD } from "@/lib/order";
+import { SHOP, TIERS, EXTRA_CHILD, BUSINESS, CONTACT } from "@/lib/order";
 const gbp = (p) => "£" + (p / 100).toFixed(2);
 export default function Home() {
   return (
@@ -28,7 +28,7 @@ export default function Home() {
           </div>
         ))}
       </section>
-      <footer>Each extra child on the same order is {gbp(EXTRA_CHILD)}. Letters are delivered digitally, straight after payment. <Link href="/privacy">Privacy and your child’s details</Link></footer>
+      <footer>Each extra child on the same order is {gbp(EXTRA_CHILD)}. Letters are delivered digitally, straight after payment. <Link href="/privacy">Privacy and your child’s details</Link> · <Link href="/terms">Terms and refunds</Link><br />{SHOP} is operated by {BUSINESS} · <a href={"mailto:" + CONTACT}>{CONTACT}</a></footer>
     </div>
   );
 }

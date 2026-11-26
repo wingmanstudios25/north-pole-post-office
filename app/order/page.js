@@ -15,6 +15,7 @@ export default function Order() {
   const [active, setActive] = useState(0);
   const [view, setView] = useState("classic");
   const [ok, setOk] = useState(false);
+  const [now, setNow] = useState(false);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
   useEffect(() => { const t = new URLSearchParams(location.search).get("tier"); if (TIERS[t]) setTier(t); }, []);
@@ -30,6 +31,7 @@ export default function Order() {
     const bad = cleaned.findIndex((c) => childErrors(c).length);
     if (bad >= 0) { setActive(bad); setError("Please fill in for " + (cleaned[bad].name || "child " + (bad + 1)) + ": " + childErrors(cleaned[bad]).join(", ") + "."); return; }
     if (!ok) { setError("Please tick the box to confirm you are the child’s parent or guardian."); return; }
+    if (!now) { setError("Please tick the box to confirm you would like the letter delivered straight away."); return; }
     setBusy(true);
     try {
       const r = await fetch("/api/checkout", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ tier, kind, children: cleaned }) });
@@ -66,6 +68,7 @@ export default function Order() {
           </fieldset>
           <div className="total"><span>Total</span><span>{gbp(priceFor(tier, children.length))}</span></div>
           <label className="check"><input type="checkbox" checked={ok} onChange={(e) => setOk(e.target.checked)} /><span>I am this child’s parent or guardian, and I am happy for these details to be used to make the letter. <Link href="/privacy">How we look after them</Link>.</span></label>
+          <label className="check"><input type="checkbox" checked={now} onChange={(e) => setNow(e.target.checked)} /><span>Please deliver my letter straight after payment. I understand that once it has been delivered I can no longer cancel under the 14-day cooling-off period. <Link href="/terms">Terms and refunds</Link>.</span></label>
           {error && <div className="err" role="alert">{error}</div>}
           <button className="btn" disabled={busy}>{busy ? "Taking you to payment…" : "Pay and receive the letter"}</button>
         </form>
