@@ -1,5 +1,5 @@
 import { isAdmin } from "@/lib/admin";
-import { stripe } from "@/lib/server";
+import { stripe, settled } from "@/lib/server";
 import { fromMetadata, TIERS, SHOP } from "@/lib/order";
 import AdminOrders from "@/components/AdminOrders";
 export const dynamic = "force-dynamic";
@@ -19,7 +19,7 @@ export default async function Admin({ searchParams }) {
   try {
     const page = await s.checkout.sessions.list({ limit: 100, status: "complete", ...(q.after ? { starting_after: String(q.after) } : {}), ...(q.email ? { customer_details: { email: String(q.email).trim() } } : {}) });
     more = page.has_more;
-    orders = page.data.filter((x) => x.payment_status === "paid").map((x) => { const o = fromMetadata(x.metadata); return { sid: x.id, when: x.created * 1000, email: x.customer_details?.email || "", amount: x.amount_total, test: !x.livemode, tier: o ? TIERS[o.tier].name : "Unknown", children: o ? o.children.map((c) => ({ name: c.name, town: c.town })) : [], letters: o ? o.letters.length : 0 }; });
+    orders = page.data.filter(settled).map((x) => { const o = fromMetadata(x.metadata); return { sid: x.id, when: x.created * 1000, email: x.customer_details?.email || "", amount: x.amount_total, test: !x.livemode, tier: o ? TIERS[o.tier].name : "Unknown", children: o ? o.children.map((c) => ({ name: c.name, town: c.town })) : [], letters: o ? o.letters.length : 0 }; });
   } catch (e) { console.error(e); problem = "Stripe did not answer. Refresh the page to try again."; }
   return <AdminOrders orders={orders} more={more} last={orders.at(-1)?.sid || ""} email={q.email ? String(q.email) : ""} problem={problem} />;
 }
