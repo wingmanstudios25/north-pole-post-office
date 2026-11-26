@@ -6,7 +6,7 @@ import { LETTERS } from "@/lib/order";
 const SILENCE = "data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQAAAAA=";
 
 // Father Christmas's own hands open the envelope (film), then the child's letter appears on the page he is holding.
-export default function FilmExperience({ sid, order, c, k, film }) {
+export default function FilmExperience({ sid, order, c, k, films }) {
   const child = order.children[c];
   const [phase, setPhase] = useState(0);        // 0 sealed · 1 film playing · 2 letter appearing · 3 reading
   const [dim, setDim] = useState(null);
@@ -19,13 +19,17 @@ export default function FilmExperience({ sid, order, c, k, film }) {
   useLayoutEffect(() => {
     const m = () => {
       const vw = innerWidth, vh = innerHeight;
-      const fh = Math.max(vh, vw * 0.9 / film.aspect > vh && vw < 520 ? vh : vh), fw = fh * film.aspect;   // fit the height; phones crop a little off the sides
+      const film = vw / vh > 1.15 && films.wide ? films.wide : films.tall;   // laptops and TVs get the wide film
+      // tall film: fit the height (phones crop a little off the sides). wide film: fill the screen.
+      const fh = film === films.tall ? vh : Math.max(vh, vw / film.aspect), fw = fh * film.aspect;
       const fx = (vw - fw) / 2, fy = (vh - fh) / 2;
-      const p = { x: fx + fw * film.page.x, w: fw * film.page.w }; p.h = p.w * 297 / 210; p.y = fy + fh * film.page.y + (fh * film.page.h - p.h) / 2;
-      setDim({ vw, vh, fw, fh, fx, fy, p, envW: fw * 0.725, envY: fy + fh * 0.472, ks: p.w / 793.7 });
+      // the letter sits inside the blank page, centred, whichever of width or height is the tighter fit
+      const pw = fw * film.page.w, ph = fh * film.page.h, w = Math.min(pw, ph * 210 / 297) * 0.985, h = w * 297 / 210;
+      const p = { x: fx + fw * film.page.x + (pw - w) / 2, y: fy + fh * film.page.y + (ph - h) / 2, w, h };
+      setDim({ vw, vh, fw, fh, fx, fy, p, film, envW: fw * film.env.w, envX: fx + fw * film.env.x, envY: fy + fh * film.env.y, envH: fw * film.env.w / film.env.ratio, ks: p.w / 793.7 });
     };
     m(); addEventListener("resize", m); return () => removeEventListener("resize", m);
-  }, [film]);
+  }, [films]);
 
   useEffect(() => {
     if (!order.voice) { setVoice("none"); return; }
@@ -76,7 +80,7 @@ export default function FilmExperience({ sid, order, c, k, film }) {
   function again() { pause(); const a = audio.current; if (a) { a.currentTime = 0; delete a.dataset.loaded; } started.current = false; arrived.current = false; last.current = -1; sheet.current?.querySelectorAll(".now").forEach((n) => n.classList.remove("now")); setFocusY(null); setStatus(""); if (video.current) { video.current.pause(); video.current.currentTime = 0; } setPhase(0); }
 
   if (!dim) return <div className="stage film" />;
-  const { vw, vh, fw, fh, fx, fy, p, envW, envY, ks } = dim;
+  const { vw, vh, fw, fh, fx, fy, p, film, envW, envX, envY, envH, ks } = dim;
   // Reading: bring the page towards the viewer so the words are large enough to follow.
   let world = "none";
   if (phase === 3) {
@@ -89,18 +93,17 @@ export default function FilmExperience({ sid, order, c, k, film }) {
   const others = [];
   order.children.forEach((ch, ci) => order.letters.forEach((lk) => { if (ci !== c || lk !== k) others.push({ ci, lk, label: (order.children.length > 1 ? ch.name + " · " : "") + LETTERS[lk].title }); }));
   const file = (type) => `/api/file?sid=${encodeURIComponent(sid)}&c=${c}&k=${k}&type=${type}`;
-  const envH = envW / 1.58;
 
   return (
     <div className="stage film">
       <div className="world" style={{ transform: world }}>
-        <video ref={video} className="filmv" src={film.src} poster="/film/first.jpg" muted playsInline preload="auto" onEnded={arrive} onError={() => phase === 1 && arrive()}
+        <video key={film.src} ref={video} className="filmv" src={film.src} poster={film.poster} muted playsInline preload="auto" onEnded={arrive} onError={() => phase === 1 && arrive()}
           style={{ left: fx, top: fy, width: fw, height: fh, opacity: 1 }} />
         <div className={"onpage" + (phase === 3 ? " reading" : "")} ref={sheet} style={{ left: p.x, top: p.y, width: p.w, height: p.h, opacity: phase >= 2 ? 1 : 0 }}>
           <div style={{ width: "210mm", height: "297mm", transform: `scale(${ks})`, transformOrigin: "0 0" }}><Letter child={child} kind={k} year={order.year} plain /></div>
         </div>
       </div>
-      <div className={"env" + (phase >= 1 ? " gone2" : "")} style={{ width: envW, height: envH, marginLeft: -envW / 2, top: envY, marginTop: -envH / 2 }} aria-hidden={phase > 0}>
+      <div className={"env" + (phase >= 1 ? " gone2" : "")} style={{ width: envW, height: envH, left: envX, marginLeft: -envW / 2, top: envY, marginTop: -envH / 2 }} aria-hidden={phase > 0}>
         <div className="envfront">
           <img className="pm" src="/art/postmark.png" alt="" /><img className="st" src="/art/stamp.png" alt="" />
           <div className="to" style={{ fontSize: envH * 0.17 }}>{child.name}</div>

@@ -3,7 +3,7 @@ import { getOrder } from "@/lib/server";
 import { SHOP } from "@/lib/order";
 import Experience from "@/components/Experience";
 import FilmExperience from "@/components/FilmExperience";
-import { FILM, hasFilm } from "@/lib/film";
+import { FILMS, hasFilm } from "@/lib/film";
 export const dynamic = "force-dynamic";
 export const metadata = { title: "Your letter from Father Christmas", robots: { index: false, follow: false } };
 
@@ -16,6 +16,6 @@ export default async function LetterPage({ params, searchParams }) {
     <Link className="btn" href="/">Back to {SHOP}</Link></div>);
   const c = Math.min(Math.max(parseInt(q.c) || 0, 0), order.children.length - 1);
   const k = order.letters.includes(q.k) ? q.k : order.letters[0];
-  if (hasFilm() && q.plain !== "1") return <FilmExperience sid={sid} order={{ ...order, email: undefined }} c={c} k={k} film={FILM} />;
+  if (hasFilm() && q.plain !== "1") return <FilmExperience sid={sid} order={{ ...order, email: undefined }} c={c} k={k} films={FILMS} />;
   return <Experience sid={sid} order={{ ...order, email: undefined }} c={c} k={k} povVideo={process.env.NEXT_PUBLIC_POV_VIDEO || ""} />;
 }
